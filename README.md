@@ -2,10 +2,12 @@
 
 English | [简体中文](#简体中文)
 
-AutoHealth is a multi-agent pipeline that automates data understanding, planning, code execution, and report generation for tabular/vision tasks. It orchestrates specialized agents around a configurable OpenAI-compatible LLM endpoint and produces per-task outputs (metrics, plots, LaTeX/PDF reports).
+AutoHealth is an uncertainty-aware, multi-agent AutoML pipeline for health data. It coordinates data understanding, task-conditioned modeling, training/optimization, and report generation around an OpenAI-compatible LLM endpoint (supports DeepSeek/GLM), jointly focusing on predictive performance and uncertainty estimation. The system produces ready-to-use models plus comprehensive reports (metrics, plots, PDF) to support trustworthy, risk-aware decision-making.
 
 ## Features
-- Multi-round pipeline with DataUnderstanding → Planning → CodeExecution → ReportGeneration.
+- Uncertainty-aware multi-round pipeline with specialized agents: DataUnderstanding → Planning → CodeExecution → ReportGeneration.
+- Health-data oriented: handles heterogeneous tabular/vision tasks with task-conditioned modeling rather than fixed templates.
+- Joint focus on performance + uncertainty quantification to aid reliable decisions.
 - OpenAI-compatible client (tested with DeepSeek / GLM endpoints); vision analysis support.
 - Prompt templates and report templates customizable via YAML / LaTeX.
 - Batch runner for multiple tasks and environment bootstrap script.
@@ -71,10 +73,12 @@ Each run writes under `outputs/pipeline/<task>/<timestamp>/round_x/`:
 
 ## 简体中文
 
-AutoHealth 是一个多智能体自动化管线，覆盖数据理解、规划、代码执行和报告生成，面向表格/视觉任务。它基于可配置的 OpenAI 兼容接口（支持 DeepSeek/GLM），按任务产出指标、可视化与 LaTeX/PDF 报告。
+AutoHealth 是面向健康数据的、不确定性感知的多智能体 AutoML 管线。系统围绕可配置的 OpenAI 兼容接口（支持 DeepSeek/GLM），协同完成数据理解、任务自适应建模、训练/优化和报告生成，兼顾性能与不确定性评估，输出可直接使用的模型与支持风控决策的可视化/报告（指标、图表、PDF）。
 
 ### 功能
-- 多轮迭代：数据理解 → 规划 → 代码执行 → 报告生成。
+- 不确定性感知的多轮迭代：数据理解 → 规划 → 代码执行 → 报告生成。
+- 面向健康数据，支持多模态（表格/视觉），任务自适应建模而非固定模板。
+- 同时关注性能和不确定性量化，支撑可信、风险感知的决策。
 - 兼容 OpenAI 接口（含视觉分析）；可切换到自定义 endpoint。
 - 提示词模板（YAML）和报告模板（LaTeX）可自定义。
 - 提供批量跑任务脚本与环境初始化脚本。
