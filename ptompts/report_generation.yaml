@@ -1,0 +1,405 @@
+system_prompt: |-
+  You are a "Clinical-Style AutoML Report Writer". Your task is to write clear, instruction-like LaTeX reports for clinicians based on experimental data and results.
+
+  ## Core Principles
+  - Write strictly based on the provided materials, do not fabricate any values or conclusions
+  - Use clinician-friendly, practical language (like a doctor's guide), not academic paper tone
+  - Output must be compilable LaTeX code
+  - If information is missing, clearly mark as "Not Provided" or "N/A"
+  - **IMPORTANT**: All content must be written in **English only**, do not use Chinese characters
+  - Focus on interpretation and operational guidance: what the results mean and how to use them
+
+  ## Report Structure
+
+  The report contains the following main sections:
+
+  ### 1. Data Analysis
+  - Dataset overview (what it represents)
+  - Feature description (what is important and why)
+  - Data distribution analysis (what to watch for)
+  - Data quality issues and practical implications
+
+  ### 2. Model Training
+  - Data preprocessing methods and rationale
+  - Model setup in plain terms
+  - Training process summary
+  - Performance evaluation with interpretation and caveats
+
+  ### 3. Uncertainty Analysis
+  - Uncertainty quantification methods
+  - Calibration analysis
+  - Relationship between prediction errors and uncertainty
+  - Practical guidance on when to trust or defer to human review
+
+  ## LaTeX Writing Requirements
+  - Use article document class
+  - Use figure environment for figures with appropriate captions
+  - Use booktabs package for three-line tables
+  - Use math mode for mathematical symbols
+  - Use \section, \subsection, \subsubsection for headings
+  - **Write all content in English only**
+  - For all figures, ALWAYS specify size with \includegraphics[width=0.9\linewidth,keepaspectratio]{...}
+  - If a figure is very tall, cap height: \includegraphics[width=0.9\linewidth,height=0.85\textheight,keepaspectratio]{...}
+
+  ## Math Mode Rules (CRITICAL)
+  - For comparison expressions: put ONLY the numbers and symbols in math mode, keep variable names outside
+  - **CORRECT**: `BMI $<$ 15` or `p $\\leq$ 0.05` or `The difference is $\\leq$ 0.1`
+  - **WRONG**: `$BMI < 15$` (variable name should NOT be in math mode)
+  - **WRONG**: `$<$ 15` or `$\\leq$ 0.1` (number should be in math mode too)
+  - **WRONG**: `$< 15` or `$\\leq 0.1$` (unclosed math mode)
+  - Rule: Variable names are text, only comparison operators and numbers go in $...$
+  - Examples:
+    - "p $<$ 0.05" (correct)
+    - "accuracy $\\geq$ 0.9" (correct)
+    - "R$^2$ = 0.85" (correct for superscript)
+    - "\\texttt{Heart\\_Rate}" (use \\texttt for variable names in text)
+
+  ## Output Format
+  Output complete LaTeX document content that can be directly compiled.
+
+section_data_analysis: |-
+  # Task Description
+  {task_description}
+
+  # Data Exploration Report
+  {data_report}
+
+  ## Your Task
+
+  Please write the "Data Analysis" section in LaTeX based on the data exploration report above, in a clinician-facing tone.
+
+  ## Content Requirements
+
+  1. **Dataset Overview**: Describe basic information and what the dataset represents for clinical use
+  2. **Feature Analysis**: Summarize key features, why they matter, and how to interpret their distributions
+  3. **Data Quality**: Describe data quality issues and practical implications for use
+  4. **Figure References**: Use \includegraphics to reference figures if paths are provided
+
+  ## IMPORTANT
+  - **Write all content in English only**
+  - Translate any Chinese content in the source material to English
+  - Use practical, instruction-like writing style (explain meaning and implications)
+
+  ## Output Format
+
+  **CRITICAL**: You MUST wrap your ENTIRE LaTeX output in a fenced code block with ```latex
+
+  ```latex
+  \section{Data Analysis}
+  ...your content...
+  ```
+
+  Do NOT include any explanatory text outside the code block. Output ONLY the LaTeX code inside the fenced block.
+
+section_model_training: |-
+  # Task Description
+  {task_description}
+
+  # Data Exploration Report (for background)
+  {data_report}
+
+  # Training Plan
+  {training_plan}
+
+  # Training Results/Metrics
+  {training_results}
+
+  # Feedback Analysis
+  {feedback_analysis}
+
+  # Image Analysis Results (VLM)
+  {image_analysis}
+
+  ## Your Task
+
+  Please write the "Model Training" section in LaTeX, in a clinician-facing tone.
+
+  ## Content Requirements
+
+  1. **Data Preprocessing**:
+     - Describe preprocessing methods used (standardization, encoding, missing value handling, etc.)
+     - Explain why these methods were chosen and what they imply for use
+
+  2. **Model Setup**:
+     - Describe the model type in plain terms
+     - Explain key hyperparameters and practical impact
+     - If multiple iterations, describe the optimization process
+
+  3. **Training Process**:
+     - Describe the training process with key takeaways (convergence, stability)
+     - Reference training curve plots if available
+
+  4. **Performance Evaluation**:
+     - Report key metrics (accuracy, F1, AUC, etc.)
+     - Interpret strengths/weaknesses and when to be cautious
+
+  5. **Figure References**: Reference figures based on image analysis results
+
+  ## IMPORTANT
+  - **Write all content in English only**
+  - Translate any Chinese content in the source material to English
+  - Use practical, instruction-like writing style (what results mean and how to use them)
+
+  ## Output Format
+
+  **CRITICAL**: You MUST wrap your ENTIRE LaTeX output in a fenced code block with ```latex
+
+  ```latex
+  \section{Model Training}
+  ...your content...
+  ```
+
+  Do NOT include any explanatory text outside the code block. Output ONLY the LaTeX code inside the fenced block.
+
+section_uncertainty_analysis: |-
+  # Task Description
+  {task_description}
+
+  # Uncertainty Analysis Image Analysis Results (VLM)
+  {uncertainty_image_analysis}
+
+  # Uncertainty Metrics
+  {uncertainty_metrics}
+
+  ## Your Task
+
+  Please write the "Uncertainty Analysis" section in LaTeX, in a clinician-facing tone.
+
+  ## Content Requirements
+
+  1. **Uncertainty Quantification Methods**: Explain how uncertainty is measured, in plain language
+  2. **Calibration Analysis**: Explain whether probabilities are reliable and how to interpret them
+  3. **Error Analysis**: Explain how uncertainty relates to likely errors
+  4. **Practical Guidance**: When to trust the model, when to defer or request human review
+  5. **Figure References**: Reference uncertainty-related figures
+
+  ## IMPORTANT
+  - **Write all content in English only**
+  - Translate any Chinese content in the source material to English
+  - Use practical, instruction-like writing style (decision support guidance)
+
+  ## Output Format
+
+  **CRITICAL**: You MUST wrap your ENTIRE LaTeX output in a fenced code block with ```latex
+
+  ```latex
+  \section{Uncertainty Analysis}
+  ...your content...
+  ```
+
+  Do NOT include any explanatory text outside the code block. Output ONLY the LaTeX code inside the fenced block.
+
+fix_latex_error: |-
+  # LaTeX Compilation Error
+
+  You need to fix the following LaTeX compilation error.
+
+  ## Error Message
+  ```
+  {error_message}
+  ```
+
+  ## Original LaTeX Code
+  ```latex
+  {latex_code}
+  ```
+
+  ## Your Task
+
+  Analyze the error cause and output the fixed complete LaTeX code.
+
+  ## Common Error Types and Fixes
+
+  1. **Table errors**: Check if \\hline, \\toprule, \\bottomrule are paired
+  2. **Math mode errors (CRITICAL)**:
+     - For comparison expressions: put ONLY numbers and symbols in math mode, keep variable names OUTSIDE
+     - **CORRECT**: `BMI $<$ 15` or `p $\\leq$ 0.05` or `R$^2$ = 0.85`
+     - **WRONG**: `$BMI < 15$` - variable name should NOT be in math mode
+     - **WRONG**: `$<$ 15` - number should also be in math mode
+     - **WRONG**: `$< 15` or `$\\leq 0.1$` - unclosed math mode
+     - Rule: Variable names are TEXT, only operators/numbers in $...$
+     - Examples: "accuracy $\\geq$ 0.9", "difference $\\leq$ 0.1"
+  3. **Unclosed environments**: Check if \\begin{...} and \\end{...} are paired
+  4. **Special characters**: Use \\&, \\%, \\$, \\#, \\_, \\{, \\} to escape
+  5. **Figure paths**: Check if \includegraphics file paths are correct
+  6. **Chinese characters**: Remove any Chinese characters, use English only
+
+  ## IMPORTANT
+  - **All content must be in English only**
+  - Remove any Chinese characters that cause compilation errors
+  - Translate to English if necessary
+
+  ## Output Format
+
+  **CRITICAL**: You MUST wrap your ENTIRE LaTeX output in a fenced code block with ```latex
+
+  ```latex
+  \documentclass{article}
+  ...
+  \end{document}
+  ```
+
+  Do NOT include any explanatory text outside the code block. Output ONLY the fixed LaTeX code inside the fenced block.
+
+generate_full_report: |-
+  # Task Description
+  {task_description}
+
+  # Data Analysis Section
+  {data_analysis_section}
+
+  # Model Training Section
+  {model_training_section}
+
+  # Uncertainty Analysis Section
+  {uncertainty_analysis_section}
+
+  ## Your Task
+
+  Combine the above sections into a complete LaTeX document with a clinician-facing tone.
+
+  ## Document Requirements
+
+  1. Use article document class
+  2. Load necessary packages (graphicx, booktabs, amsmath, etc.)
+  3. Include title, author, date information
+  4. Include three sections in order: Data Analysis, Model Training, Uncertainty Analysis
+
+  ## IMPORTANT
+  - **All content must be in English only**
+  - Use English for title, author, and all content
+  - Do not include Chinese characters
+
+  ## Output Format
+
+  Output complete compilable LaTeX document, from \\documentclass to \\end{{document}}.
+
+  ```latex
+  \documentclass{{article}}
+  \usepackage{{graphicx}}
+  ...
+  \begin{{document}}
+  ...
+  \end{{document}}
+  ```
+
+debug_compilation: |-
+  # LaTeX Compilation Debug Mode
+
+  ## Current Status
+  Compilation failed, needs debugging
+
+  ## Error Log (last 100 lines)
+  ```
+  {error_log_tail}
+  ```
+
+  ## Current LaTeX Code Snippet (around error location)
+  ```latex
+  {code_snippet}
+  ```
+
+  ## Your Task
+
+  1. Analyze the error cause
+  2. Provide fix suggestions or directly fix the code
+  3. Ensure the fixed code can compile successfully
+
+  ## IMPORTANT
+  - **All content must be in English only**
+  - Remove any Chinese characters that cause compilation errors
+  - Use standard LaTeX packages compatible with lualatex
+
+  ## Output Format
+
+  **CRITICAL**: You MUST wrap your ENTIRE LaTeX output in a fenced code block with ```latex
+
+  You may include a brief explanation BEFORE the code block, but the fixed LaTeX code MUST be inside a fenced code block.
+
+  Example:
+  The error was caused by... Here is the fixed code:
+
+  ```latex
+  \documentclass{article}
+  ...
+  \end{document}
+  ```
+
+# ==================== Simplified Report Generation Template ====================
+
+generate_full_report_simple: |-
+  You are a "Clinical-Style AutoML Report Writer". Fill in content for the provided LaTeX template and output the COMPLETE LaTeX document.
+
+  ## Task Description
+  {task_description}
+
+  ## Data Analysis Report
+  {data_report}
+
+  ## Training Plan
+  {training_plan}
+
+  ## Training Results Summary
+  {training_output}
+
+  ## Available Images
+  {images_info}
+
+  ## Report Metadata
+  - Title: {title}
+  - Author: {author}
+  - Date: \today
+
+  ## LaTeX Template
+  Below is the complete LaTeX template. **You MUST keep ALL template settings unchanged** (documentclass, usepackage, geometry, etc.) - only modify title, author, abstract, and fill in section contents.
+
+  ```latex
+  {latex_template}
+  ```
+
+  ## Your Task
+  Fill in the template and output the COMPLETE LaTeX document:
+
+  1. **Keep Template Structure**: DO NOT modify \documentclass, \usepackage, \geometry, or any other template settings. Keep them EXACTLY as provided.
+  2. **Title/Author/Date**: Replace %%AUTOCLINE:TITLE%% with \title{{{title}}}, %%AUTOCLINE:AUTHOR%% with \author{{{author}}}, %%AUTOCLINE:DATE%% with \date{\today}
+  3. **Abstract**: Replace %%AUTOCLINE:ABSTRACT%% with \begin{abstract}...\end{abstract} containing a brief summary of the entire experiment
+  4. **\section{Data Analysis}**: Create 2-4 logical subsections (e.g., Dataset Overview, Feature Analysis, Data Quality) and fill with coherent, well-organized content. Add explanations, interpretations, and practical implications.
+  5. **\section{Model Training}**: Fill ALL provided subsections with detailed content:
+     - **Data Preprocessing**: Explain what preprocessing methods were used and why
+     - **Model Architecture**: Describe the model type and structure in plain terms
+     - **Hyperparameters**: List key hyperparameters and their values with practical impact
+     - **Training Process**: Describe training convergence and stability, in simple terms
+     - **Model Performance**: Report metrics with interpretation and cautions
+  6. **\section{Uncertainty Analysis}**: Explain uncertainty results and how clinicians should use them
+  7. **\section{Conclusion}**: Summarize key findings and actionable guidance
+  8. Remove %%AUTOCLINE:CONTENT%% marker
+
+  ## Content Requirements
+  - **Coherence**: Ensure logical flow between sections and subsections
+  - **Completeness**: Add necessary explanations, interpretations, and insights
+  - **Evidence-based**: Support statements with data from the provided reports
+  - **Clarity**: Use clear, clinician-friendly language with proper transitions
+  - **Use ALL Images**: You MUST include EVERY image listed in "Available Images" in your report. Each image should be placed in a relevant section with a descriptive \caption explaining what the image shows and its significance.
+
+  ## Important Notes
+  - Use \includegraphics{/absolute/image/path.png} for images
+  - Always include size options: \includegraphics[width=0.9\linewidth,keepaspectratio]{...}
+  - If a figure is very tall, cap height with height=0.85\textheight
+  - **DO NOT escape underscores in file paths** - write them as normal underscores
+    - Example: `\includegraphics{/data4/.../uncertainty_analysis.png}` (NO backslash before underscore)
+  - Use \begin{figure}[htbp]...\end{figure} with \caption for figures
+  - Use \begin{table}[htbp]...\end{table} with booktabs for tables
+  - Math mode: For comparisons, put ONLY symbols and numbers in math mode
+    - CORRECT: `BMI $<$ 15` or `accuracy $\geq$ 0.9`
+    - WRONG: `$BMI < 15$` (variable should NOT be in math mode)
+  - Write ALL content in English only
+
+  ## Output Format
+  Output the COMPLETE LaTeX document that can be directly compiled:
+
+  ```latex
+  \documentclass[a4paper]{article}
+  \usepackage{graphicx}
+  ...
+  \end{document}
+  ```
