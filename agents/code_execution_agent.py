@@ -13,11 +13,11 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
-from AutoHealth.config import load_config
-from AutoHealth.llm import OpenAICompatClient
-from AutoHealth.ptompts import load_prompt_template, render_prompt
-from AutoHealth.tools.executor import write_text
-from AutoHealth.tools.safety import python_code_safety_execution
+from AutoClineAI.config import load_config
+from AutoClineAI.llm import OpenAICompatClient
+from AutoClineAI.ptompts import load_prompt_template, render_prompt
+from AutoClineAI.tools.executor import write_text
+from AutoClineAI.tools.safety import python_code_safety_execution
 
 
 _PY_BLOCK_RE = re.compile(r"```python\s*(.*?)```", flags=re.DOTALL)
@@ -348,7 +348,7 @@ class CodeExecutionAgent:
 2. 对所提问题的直接回答
 3. 任何有价值的观察或建议"""
             else:
-                from AutoHealth.ptompts import render_prompt
+                from AutoClineAI.ptompts import render_prompt
                 prompt = render_prompt(template, {
                     "image_path": image_path,
                     "question": question,
@@ -664,29 +664,7 @@ class CodeExecutionAgent:
         if len(self._observation) > 30000:
             self._observation = self._observation[-30000:]
 
-    def _score_image(self, path: Path) -> int:
-        name = path.name.lower()
-        score = 0
-        keywords = [
-            "training",
-            "history",
-            "loss",
-            "curve",
-            "uncertainty",
-            "interval",
-            "reliability",
-            "feature",
-            "target",
-            "distribution",
-        ]
-        for key in keywords:
-            if key in name:
-                score += 2
-        if "debug" in name or "temp" in name:
-            score -= 5
-        return score
-
-    def _collect_images(self, *, max_images: int = 10) -> List[Path]:
+    def _collect_images(self, *, max_images: Optional[int] = None) -> List[Path]:
         exts = {".png", ".jpg", ".jpeg", ".svg"}
         candidates: List[Path] = []
         for path in self.output_dir.rglob("*"):
@@ -702,8 +680,8 @@ class CodeExecutionAgent:
                 continue
             candidates.append(path)
 
-        candidates.sort(key=lambda p: (self._score_image(p), p.stat().st_mtime), reverse=True)
-        return candidates[:max_images]
+        candidates.sort(key=lambda p: p.stat().st_mtime, reverse=True)
+        return candidates if max_images is None else candidates[:max_images]
 
     def _load_image_cache(self, cache_path: Path) -> Dict[str, str]:
         if not cache_path.exists():
@@ -1295,7 +1273,7 @@ class CodeExecutionAgent:
                 full_code_parts.append(f"# 步骤 {r.step_no}: {r.execution_content}\n{r.code}")
 
         if full_code_parts:
-            full_notebook = "# AutoHealth 完整执行记录\n"
+            full_notebook = "# AutoClineAI 完整执行记录\n"
             full_notebook += f"# 创建时间: {datetime.now().isoformat(timespec='seconds')}\n"
             full_notebook += f"# 输出目录: {self.output_dir.absolute()}\n\n"
             full_notebook += "\n\n".join(full_code_parts)
