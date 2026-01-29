@@ -1,0 +1,26 @@
+Task Name: Dysarthria_Detection
+
+[Task Overview]
+- Task Type: audio binary classification
+- Modality: speech audio recordings (WAV)
+- Downstream Goal: detect whether a speaker exhibits dysarthric speech patterns from an audio recording.
+- Target Column: is_dysarthria (dysarthria vs non_dysarthria)
+- Evaluation Metric: Accuracy
+- Note: the test split in this dataset also contains labels.
+- Objective: train a high-performing model that generalizes well to unseen speakers/recordings for dysarthria detection.
+- Do not consider train/validation/test data leakage; the goal is to maximize performance.
+
+[Dataset Paths]
+- Dataset Root: /root/Dataset/Dysarthria_Detection/
+- Train CSV: /root/Dataset/Dysarthria_Detection/data/train/train.csv
+- Train Audio: /root/Dataset/Dysarthria_Detection/data/train/audio/
+- Validation CSV: /root/Dataset/Dysarthria_Detection/data/val/val.csv
+- Validation Audio: /root/Dataset/Dysarthria_Detection/data/val/audio/
+- Test CSV: /root/Dataset/Dysarthria_Detection/data/test/test.csv
+- Test Audio: /root/Dataset/Dysarthria_Detection/data/test/audio/
+
+[Dataset Details]
+- Format: CSV (metadata) + WAV (audio)
+- CSV columns (brief):
+  - is_dysarthria: target label indicating dysarthria status
+  - filename: relative path to the corresponding WAV file within the split folder

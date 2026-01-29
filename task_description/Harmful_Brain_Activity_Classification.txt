@@ -1,0 +1,28 @@
+Task Name: Harmful_Brain_Activity_Classification
+
+[Task Overview]
+- Task Type: multi-class classification (6 classes)
+- Modality: spectrogram (time-frequency representation of EEG signals)
+- Downstream Goal: classify harmful brain activity patterns from EEG spectrograms
+- Target Column: expert_consensus
+- Evaluation Metric: Kullback Liebler divergence
+- Note: the test split in this dataset also contains labels.
+- Objective: train a model that can accurately classify 6 types of harmful brain activity patterns.
+
+
+[Dataset Paths]
+- Dataset Root: /root/Dataset/Harmful_Brain_Activity_Classification/
+- Train: /root/Dataset/Harmful_Brain_Activity_Classification/data/train/train.csv
+- Validation: /root/Dataset/Harmful_Brain_Activity_Classification/data/val/val.csv
+- Test: /root/Dataset/Harmful_Brain_Activity_Classification/data/test/test.csv
+- Spectrogram Data: /root/Dataset/Harmful_Brain_Activity_Classification/data/spectrograms/
+
+[Dataset Details]
+- Format: CSV (annotations) + Parquet (spectrogram data)
+- CSV Columns:
+  - spectrogram_id: links to parquet file (e.g., 353733 -> 353733.parquet)
+  - spectrogram_sub_id: segment identifier within a spectrogram
+  - spectrogram_label_offset_seconds: time offset for the labeled segment
+  - expert_consensus: target label (6 classes)
+  - {seizure,lpd,gpd,lrda,grda,other}_vote: expert votes for each class
+  - patient_id: patient identifier (used to ensure no data leakage)

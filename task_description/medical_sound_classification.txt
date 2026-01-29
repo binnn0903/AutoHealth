@@ -1,0 +1,30 @@
+Task Name: medical_sound_classification
+
+[Task Overview]
+- Task Type: multi-modal classification (tabular + audio)
+- Modality: structured tabular metadata + respiratory audio recordings (cough and vowel)
+- Downstream Goal: predict the respiratory disease class for each candidate based on metadata and audio signals.
+- Target Column: disease (categorical label)
+- Evaluation Metric: Macro F1
+- Note: the test split in this dataset also contains labels.
+- Objective: train a high-performing model that generalizes well to unseen candidates for robust respiratory disease detection.
+
+[Dataset Paths]
+- Dataset Root: /root/Dataset/medical_sound_classification/
+- Train Table: /root/Dataset/medical_sound_classification/data/train/train.csv
+- Train Sounds: /root/Dataset/medical_sound_classification/data/train/sounds/
+- Validation Table: /root/Dataset/medical_sound_classification/data/val/val.csv
+- Validation Sounds: /root/Dataset/medical_sound_classification/data/val/sounds/
+- Test Table: /root/Dataset/medical_sound_classification/data/test/test.csv
+- Test Sounds: /root/Dataset/medical_sound_classification/data/test/sounds/
+
+[Dataset Details]
+- Format: CSV (tables) + WAV (audio) + JSON (precomputed embeddings)
+- Table columns (brief):
+  - candidateID: candidate identifier (maps to the corresponding audio folder)
+  - age, gender: basic demographics
+  - tbContactHistory, wheezingHistory, phlegmCough, familyAsthmaHistory, feverHistory, coldPresent: symptom / history indicators
+  - packYears: smoking exposure indicator
+  - disease: target label
+- Audio/embedding files (brief):
+  - Each candidate folder contains cough.wav, vowel.wav, and optional embedding files (emb_cough.json, emb_vowel.json).

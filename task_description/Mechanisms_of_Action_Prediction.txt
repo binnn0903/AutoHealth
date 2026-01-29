@@ -1,0 +1,29 @@
+Task Name: Mechanisms_of_Action_Prediction
+
+[Task Overview]
+- Task Type: tabular multi-label classification
+- Modality: structured tabular data (gene expression features + cell viability features + treatment metadata)
+- Downstream Goal: predict the probability of each mechanism-of-action (MoA) label for a treated sample.
+- Target Columns: multiple binary MoA label columns (0/1), one column per MoA class
+- Evaluation Metric: Mean Log Loss (averaged across MoA targets)
+- Note: the test split in this dataset also contains labels.
+- Objective: train a high-performing model that generalizes well to unseen samples for this MoA prediction task.
+
+[Dataset Paths]
+- Dataset Root: /root/Dataset/Mechanisms_of_Action_Prediction/
+- Train Features: /root/Dataset/Mechanisms_of_Action_Prediction/data/train/train.csv
+- Train Labels: /root/Dataset/Mechanisms_of_Action_Prediction/data/train/train_labels.csv
+- Train Drug IDs: /root/Dataset/Mechanisms_of_Action_Prediction/data/train/train_drug.csv
+- Validation Features: /root/Dataset/Mechanisms_of_Action_Prediction/data/val/val.csv
+- Validation Labels: /root/Dataset/Mechanisms_of_Action_Prediction/data/val/val_labels.csv
+- Validation Drug IDs: /root/Dataset/Mechanisms_of_Action_Prediction/data/val/val_drug.csv
+- Test Features: /root/Dataset/Mechanisms_of_Action_Prediction/data/test/test.csv
+- Test Labels: /root/Dataset/Mechanisms_of_Action_Prediction/data/test/test_labels.csv
+- Test Drug IDs: /root/Dataset/Mechanisms_of_Action_Prediction/data/test/test_drug.csv
+
+[Dataset Details]
+- Format: CSV
+- Files (brief):
+  - Features files: contain sig_id, cp_type, cp_time, cp_dose, g-* (gene expression), and c-* (cell viability) columns.
+  - Label files: contain sig_id and multiple binary MoA target columns (0/1), one column per MoA class.
+  - Drug ID files: contain sig_id and an anonymized drug_id identifier.

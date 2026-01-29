@@ -1,0 +1,23 @@
+Task Name: Text-based_Early_ASD_Detection
+
+[Task Overview]
+- Task Type: text classification (binary)
+- Modality: text
+- Downstream Goal: predict whether the described behavior patterns indicate ASD-related signs.
+- Target Column: ASD (ASD / Non-ASD)
+- Evaluation Metric: Accuracy
+- Note: the test split in this dataset also contains labels.
+- Objective: train a high-performing model that generalizes well for early ASD risk detection from text.
+
+[Dataset Paths]
+- Dataset Root: /root/Dataset/Text-based_Early_ASD_Detection/
+- Train: /root/Dataset/Text-based_Early_ASD_Detection/data/train/train.csv
+- Validation: /root/Dataset/Text-based_Early_ASD_Detection/data/val/val.csv
+- Test: /root/Dataset/Text-based_Early_ASD_Detection/data/test/test.csv
+
+[Dataset Details]
+- Format: CSV
+- Each row contains a text sample and its ASD label.
+- Columns (brief):
+  - Text: the text description
+  - ASD: target label

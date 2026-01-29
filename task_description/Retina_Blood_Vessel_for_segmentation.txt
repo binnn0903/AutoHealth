@@ -1,0 +1,25 @@
+Task Name: Retina_Blood_Vessel_for_segmentation
+
+[Task Overview]
+- Task Type: medical image segmentation (binary segmentation)
+- Modality: retinal fundus images with pixel-level vessel masks
+- Downstream Goal: segment retinal blood vessels from a fundus image.
+- Target: binary mask image (vessel pixels vs background pixels)
+- Evaluation Metric: Dice Coefficient
+- Note: the test split in this dataset also contains labels.
+- Objective: train a high-performing segmentation model that produces accurate vessel masks on unseen retinal images.
+
+[Dataset Paths]
+- Dataset Root: /root/Dataset/Retina_Blood_Vessel_for_segmentation/
+- Train Images: /root/Dataset/Retina_Blood_Vessel_for_segmentation/data/train/image/
+- Train Masks: /root/Dataset/Retina_Blood_Vessel_for_segmentation/data/train/mask/
+- Validation Images: /root/Dataset/Retina_Blood_Vessel_for_segmentation/data/val/image/
+- Validation Masks: /root/Dataset/Retina_Blood_Vessel_for_segmentation/data/val/mask/
+- Test Images: /root/Dataset/Retina_Blood_Vessel_for_segmentation/data/test/image/
+- Test Masks: /root/Dataset/Retina_Blood_Vessel_for_segmentation/data/test/mask/
+
+[Dataset Details]
+- Format: PNG images
+- Paired files (brief):
+  - image/: retinal fundus images
+  - mask/: corresponding binary vessel masks with the same filename

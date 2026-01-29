@@ -1,0 +1,29 @@
+Task Name: carlorie_prediction
+
+[Task Overview]
+- Task Type: tabular regression
+- Modality: structured tabular data (workout and physiological measurements)
+- Downstream Goal: predict how many calories were burned during a workout.
+- Target Column: Calories (continuous)
+- Evaluation Metric: RMSLE (Root Mean Squared Logarithmic Error)
+- Note: the test split in this dataset also contains labels.
+- Objective: train a high-performing model that generalizes well to unseen workouts for this regression task.
+
+[Dataset Paths]
+- Dataset Root: /root/Dataset/carlorie_prediction/
+- Train: /root/Dataset/carlorie_prediction/data/train/train.csv
+- Validation: /root/Dataset/carlorie_prediction/data/val/val.csv
+- Test: /root/Dataset/carlorie_prediction/data/test/test.csv
+
+[Dataset Details]
+- Format: CSV
+- Columns (brief):
+  - id: sample identifier
+  - Sex: biological sex
+  - Age: age
+  - Height: height
+  - Weight: weight
+  - Duration: workout duration
+  - Heart_Rate: heart rate measurement
+  - Body_Temp: body temperature measurement
+  - Calories: target value (calories burned)

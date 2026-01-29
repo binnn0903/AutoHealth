@@ -1,0 +1,27 @@
+Task Name: Coronavirus_tweets_NLP
+
+[Task Overview]
+- Task Type: text classification (multi-class sentiment analysis)
+- Modality: text (tweets)
+- Downstream Goal: predict the sentiment category of a COVID-19 related tweet.
+- Target Column: Sentiment
+- Evaluation Metric: Accuracy
+- Note: the test split in this dataset also contains labels.
+- Objective: train a high-performing model that generalizes well for tweet sentiment classification.
+
+[Dataset Paths]
+- Dataset Root: /root/Dataset/Coronavirus_tweets_NLP/
+- Train: /root/Dataset/Coronavirus_tweets_NLP/data/train/train.csv
+- Validation: /root/Dataset/Coronavirus_tweets_NLP/data/val/val.csv
+- Test: /root/Dataset/Coronavirus_tweets_NLP/data/test/test.csv
+
+[Dataset Details]
+- Format: CSV
+- Each row contains a tweet and its sentiment label.
+- Columns (brief):
+  - UserName: anonymized user identifier
+  - ScreenName: anonymized screen identifier
+  - Location: user location (if available)
+  - TweetAt: tweet date
+  - OriginalTweet: tweet text
+  - Sentiment: target label (sentiment category)

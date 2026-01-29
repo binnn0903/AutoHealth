@@ -1,0 +1,27 @@
+Task Name: COVID19_prediction
+
+[Task Overview]
+- Task Type: time-series forecasting (regression)
+- Modality: multivariate time series in tabular form
+- Downstream Goal: predict future COVID-19 case counts for multiple countries using historical observations.
+- Task Definition: use the previous 7 days of country-level case counts to predict the next day's case counts.
+- Input: a 7-day window of the country count columns (multivariate history).
+- Output / Target: the next-day values of the same country count columns.
+- Evaluation Metric: MAE (Mean Absolute Error)
+- Metric Definition: MAE is computed by averaging absolute errors over all forecasted dates and all country outputs.
+- Note: the test split in this dataset also contains labels.
+- Objective: train a high-performing model that generalizes well for multi-country time-series forecasting.
+
+[Dataset Paths]
+- Dataset Root: /root/Dataset/COVID19_prediction/
+- Train: /root/Dataset/COVID19_prediction/data/train/train.csv
+- Validation: /root/Dataset/COVID19_prediction/data/val/val.csv
+- Test: /root/Dataset/COVID19_prediction/data/test/test.csv
+
+[Dataset Details]
+- Format: CSV
+- The table is pivoted by country:
+  - Date: date string
+  - Country columns (e.g., China, US, United_Kingdom, Italy, France, Germany, Spain, Iran): observed case counts on that date
+- Practical usage (brief):
+  - Sort by Date, then build supervised examples by taking 7 consecutive days as input and predicting the next day.

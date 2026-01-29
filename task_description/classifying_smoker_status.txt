@@ -1,0 +1,37 @@
+Task Name: classifying_smoker_status
+
+[Task Overview]
+- Task Type: tabular binary classification
+- Modality: structured tabular data (health check / bio-signal related features)
+- Downstream Goal: predict whether a person is a smoker based on clinical measurements and basic health indicators.
+- Target Column: smoking (0 = non-smoker, 1 = smoker)
+- Evaluation Metric: Accuracy
+- Note: the test split in this dataset also contains labels.
+- Objective: train a high-performing model that generalizes well to unseen individuals for this classification task.
+
+[Dataset Paths]
+- Dataset Root: /root/Dataset/classifying_smoker_status/
+- Train: /root/Dataset/classifying_smoker_status/data/train/train.csv
+- Validation: /root/Dataset/classifying_smoker_status/data/val/val.csv
+- Test: /root/Dataset/classifying_smoker_status/data/test/test.csv
+
+[Dataset Details]
+- Format: CSV
+- Columns (brief):
+  - ID: sample identifier
+  - gender: gender
+  - age: age
+  - height(cm), weight(kg), waist(cm): basic body measurements
+  - eyesight(left/right): eyesight measurements
+  - hearing(left/right): hearing measurements
+  - systolic, relaxation: blood pressure related measurements
+  - fasting blood sugar: fasting blood glucose
+  - Cholesterol, triglyceride, HDL, LDL: lipid profile indicators
+  - hemoglobin: hemoglobin level
+  - Urine protein: urine protein indicator
+  - serum creatinine: serum creatinine
+  - AST, ALT, Gtp: liver-related indicators
+  - oral: oral examination status
+  - dental caries: dental caries indicator
+  - tartar: tartar status
+  - smoking: target label

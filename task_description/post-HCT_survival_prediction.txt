@@ -1,0 +1,29 @@
+Task Name: post-HCT_survival_prediction
+
+[Task Overview]
+- Task Type: survival analysis (time-to-event prediction with censoring)
+- Modality: structured tabular data (recipient/donor and transplant-related features)
+- Downstream Goal: predict post-transplant event-free survival risk for allogeneic HCT patients.
+- Target Columns: efs (event indicator), efs_time (time to event / censoring)
+- Evaluation Metric: Stratified Concordance Index (C-index) across race groups
+- Note: the test split in this dataset also contains labels.
+- Objective: train a high-performing model that provides accurate and fair survival risk predictions.
+
+[Dataset Paths]
+- Dataset Root: /root/Dataset/post-HCT_survival_prediction/
+- Train: /root/Dataset/post-HCT_survival_prediction/data/train/train.csv
+- Validation: /root/Dataset/post-HCT_survival_prediction/data/val/val.csv
+- Test: /root/Dataset/post-HCT_survival_prediction/data/test/test.csv
+
+[Dataset Details]
+- Format: CSV
+- This table contains transplant-related covariates and survival outcomes.
+- Columns (brief, examples):
+  - ID: sample identifier
+  - age_at_hct, donor_age: recipient/donor age
+  - race_group, ethnicity, sex_match: demographic information
+  - graft_type, conditioning_intensity, gvhd_proph: transplant/treatment related features
+  - hla_match_* and hla_*: HLA matching related features
+  - comorbidity_score, karnofsky_score: clinical status / comorbidity indicators
+  - efs: event indicator (target)
+  - efs_time: time to event or censoring (target)

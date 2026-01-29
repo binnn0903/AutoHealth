@@ -1,0 +1,24 @@
+Task Name: skin_cancer_indentification
+
+[Task Overview]
+- Task Type: image binary classification
+- Modality: dermoscopic / skin lesion images
+- Downstream Goal: classify each skin lesion image as benign or malignant.
+- Target: class label (0 = benign, 1 = malignant)
+- Evaluation Metric: F1 Score
+- Note: the test split in this dataset also contains labels.
+- Objective: train a high-performing model that generalizes well to unseen lesion images for robust skin cancer identification.
+
+[Dataset Paths]
+- Dataset Root: /root/Dataset/skin_cancer_indentification/
+- Train Labeled Images: /root/Dataset/skin_cancer_indentification/data/train/Benign/ and /root/Dataset/skin_cancer_indentification/data/train/Malignant/
+- Train Unlabeled Images: /root/Dataset/skin_cancer_indentification/data/train/Unlabeled/
+- Validation Images: /root/Dataset/skin_cancer_indentification/data/val/
+- Test Images: /root/Dataset/skin_cancer_indentification/data/test/
+
+[Dataset Details]
+- Format: JPG images organized in folders
+- Folder structure (brief):
+  - Benign/: labeled benign lesion images
+  - Malignant/: labeled malignant lesion images
+  - Unlabeled/: additional unlabeled lesion images (no labels provided)

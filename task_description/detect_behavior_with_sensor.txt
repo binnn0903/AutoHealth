@@ -1,0 +1,37 @@
+Task Name: detect_behavior_with_sensor
+
+[Task Overview]
+- Task Type: multivariate time-series classification (sequence classification)
+- Modality: wearable sensor time series (IMU + thermopile + time-of-flight) with optional participant demographics
+- Downstream Goal: predict (1) whether a sequence is a target gesture and (2) the performed gesture class for each sensor sequence.
+- Target Columns: sequence_type (target vs non-target), gesture (gesture class)
+- Evaluation Metric: average of (1) Binary F1 (target vs non-target) and (2) Macro F1 over gesture classes (with non-target gestures collapsed).
+- Note: the test split in this dataset also contains labels.
+- Objective: train a high-performing model that generalizes well to unseen sequences for robust wearable-gesture recognition.
+
+[Dataset Paths]
+- Dataset Root: /root/Dataset/detect_behavior_with_sensor/
+- Train Sensor: /root/Dataset/detect_behavior_with_sensor/data/train/train.csv
+- Train Demographics: /root/Dataset/detect_behavior_with_sensor/data/train/train_demographics.csv
+- Validation Sensor: /root/Dataset/detect_behavior_with_sensor/data/val/val.csv
+- Validation Demographics: /root/Dataset/detect_behavior_with_sensor/data/val/val_demographics.csv
+- Test Sensor: /root/Dataset/detect_behavior_with_sensor/data/test/test.csv
+- Test Demographics: /root/Dataset/detect_behavior_with_sensor/data/test/test_demographics.csv
+
+[Dataset Details]
+- Format: CSV
+- Sensor table (brief):
+  - row_id: row identifier
+  - sequence_id: sequence identifier (multiple rows per sequence)
+  - sequence_counter: row index within a sequence
+  - subject: participant identifier
+  - sequence_type: target label (target vs non-target)
+  - acc_x, acc_y, acc_z: IMU acceleration channels
+  - rot_w, rot_x, rot_y, rot_z: IMU orientation (quaternion) channels
+  - thm_1..thm_5: thermopile temperature channels
+  - tof_*: time-of-flight sensor pixel channels
+  - gesture: target label (gesture class)
+- Demographics table (brief):
+  - subject: participant identifier (join key)
+  - adult_child, age, sex, handedness: basic participant attributes
+  - height_cm, shoulder_to_wrist_cm, elbow_to_wrist_cm: body measurements

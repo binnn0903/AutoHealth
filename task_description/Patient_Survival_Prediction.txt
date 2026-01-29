@@ -1,0 +1,28 @@
+Task Name: Patient_Survival_Prediction
+
+[Task Overview]
+- Task Type: tabular binary classification
+- Modality: structured tabular data 
+- Downstream Goal: predict in-hospital mortality for admitted patients.
+- Target Column: hospital_death (0 / 1)
+- Evaluation Metric: Accuracy
+- Note: the test split in this dataset also contains labels.
+- Objective: train a high-performing model that generalizes well for in-hospital mortality prediction.
+
+[Dataset Paths]
+- Dataset Root: /root/Dataset/Patient_Survival_Prediction/
+- Train: /root/Dataset/Patient_Survival_Prediction/data/train/train.csv
+- Validation: /root/Dataset/Patient_Survival_Prediction/data/val/val.csv
+- Test: /root/Dataset/Patient_Survival_Prediction/data/test/test.csv
+
+[Dataset Details]
+- Format: CSV
+- This table contains patient/encounter-level features and a binary mortality label.
+- Columns (brief, examples):
+  - encounter_id, patient_id, hospital_id: identifiers
+  - age, gender, ethnicity, bmi, height, weight: demographics / body measurements
+  - icu_type, icu_stay_type, icu_admit_source: ICU-related metadata
+  - heart_rate_apache, map_apache, resprate_apache, temp_apache: vital signs
+  - d1_* and h1_*: summary stats over day-1 / hour-1 windows
+  - apache_*: APACHE-related scores / diagnoses
+  - hospital_death: target label

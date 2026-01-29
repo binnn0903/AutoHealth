@@ -1,0 +1,22 @@
+Task Name: ogbl_ddi
+
+[Task Overview]
+- Task Type: graph link prediction
+- Modality: homogeneous undirected graph (drug-drug interaction network)
+- Downstream Goal: predict whether a pair of drugs has an interaction edge in the graph.
+- Target: interaction edges (positive links) between drug nodes
+- Evaluation Metric: Hits@20
+- Note: the test split in this dataset also contains labels.
+- Objective: train a high-performing model that ranks true interactions above non-interacting drug pairs for reliable DDI prediction.
+
+[Dataset Paths]
+- Dataset Root: /root/Dataset/ogbl_ddi/
+- Train Split: /root/Dataset/ogbl_ddi/data/train/train.pt
+- Validation Split: /root/Dataset/ogbl_ddi/data/val/val.pt
+- Test Split: /root/Dataset/ogbl_ddi/data/test/test.pt
+
+[Dataset Details]
+- Format: PyTorch .pt files for split edges
+- Files (brief):
+  - train.pt: training positive edges for constructing the training graph
+  - val.pt / test.pt: evaluation edges and negative candidate edges for computing Hits@20

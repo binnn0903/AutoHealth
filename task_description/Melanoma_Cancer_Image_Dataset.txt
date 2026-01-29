@@ -1,0 +1,22 @@
+Task Name: Melanoma_Cancer_Image_Dataset
+
+[Task Overview]
+- Task Type: image binary classification
+- Modality: dermoscopic / skin lesion images
+- Downstream Goal: classify each skin lesion image as benign or malignant (melanoma-related).
+- Target: class label from folder name (Benign vs Malignant)
+- Evaluation Metric: Accuracy
+- Note: the test split in this dataset also contains labels.
+- Objective: train a high-performing model that generalizes well to unseen lesion images for reliable melanoma screening.
+
+[Dataset Paths]
+- Dataset Root: /root/Dataset/Melanoma_Cancer_Image_Dataset/
+- Train Images: /root/Dataset/Melanoma_Cancer_Image_Dataset/data/train/
+- Validation Images: /root/Dataset/Melanoma_Cancer_Image_Dataset/data/val/
+- Test Images: /root/Dataset/Melanoma_Cancer_Image_Dataset/data/test/
+
+[Dataset Details]
+- Format: image files organized in class folders
+- Folder structure (brief):
+  - Benign/: benign lesion images
+  - Malignant/: malignant lesion images

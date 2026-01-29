@@ -1,0 +1,23 @@
+Task Name: ECG_AI_fast_checkup
+
+[Task Overview]
+- Task Type: binary classification
+- Modality: 1D ECG signal (waveform values stored as tabular columns)
+- Downstream Goal: classify whether an ECG recording indicates a healthy status.
+- Target Column: healthy_status (Normal / Abnormal)
+- Evaluation Metric: Accuracy
+- Note: the test split in this dataset also contains labels.
+- Objective: train a high-performing model that generalizes well for ECG-based health status classification.
+
+[Dataset Paths]
+- Dataset Root: /root/Dataset/ECG_AI_fast_checkup/
+- Train: /root/Dataset/ECG_AI_fast_checkup/data/train/train.csv
+- Validation: /root/Dataset/ECG_AI_fast_checkup/data/val/val.csv
+- Test: /root/Dataset/ECG_AI_fast_checkup/data/test/test.csv
+
+[Dataset Details]
+- Format: CSV
+- Columns (brief):
+  - id: sample identifier
+  - 0..186: ECG waveform values at different time points
+  - healthy_status: target label
