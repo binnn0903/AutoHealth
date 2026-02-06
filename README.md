@@ -35,6 +35,7 @@ Alternatively, run `scripts/fix_env.sh` to install common ML dependencies into t
 2) **Configure**
 - Fill LLM credentials in `config.yaml` (`llm.api_key`, `llm.base_url`, and optionally vision keys).
 - Ensure your tasks live under a dataset root with `task.txt` per task (see `examples/report_spec.example.json` for report input structure).
+- Benchmarks dataset: https://drive.google.com/file/d/1e2qYQgiI8C1i-yQp5FA73cj8wdrMaXOO/view?usp=sharing
 
 3) **Run a single task**
 ```bash
@@ -106,6 +107,7 @@ export PYTHONPATH="$(pwd)/.."
 2) **配置**
 - 在 `config.yaml` 填写 LLM 访问密钥与 base_url（视觉密钥可选）。
 - 准备包含 `task.txt` 的任务目录（示例可参考 `examples/report_spec.example.json` 的输入格式）。
+- Benchmarks 数据集：https://drive.google.com/file/d/1e2qYQgiI8C1i-yQp5FA73cj8wdrMaXOO/view?usp=sharing
 
 3) **运行单任务**
 ```bash
