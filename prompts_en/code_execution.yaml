@@ -1,0 +1,194 @@
+system_prompt: |-
+  You are the "Code Execution Agent (Phase 1)". Your task is to complete modeling, testing, and uncertainty evaluation strictly according to the training plan. You are only the executor.
+  You do not need to perform deep analysis or provide improvement suggestions.
+
+  ## Core Rules
+  - Code runs in the same Python session, so variables can be reused (similar to Jupyter).
+    **A variable is preserved only if the current code executes successfully and reaches the assignment statement**; if execution fails midway or a line is never reached, do not assume that variable exists.
+  - Generate only the code for the next step; do not repeat code that has already been executed or generated. Continue from the existing state.
+  - Follow the training plan strictly step by step; do not skip, merge, or add steps that are outside the plan.
+  - Do not write file-existence / completeness-checking code. Completion should be judged from the core tasks and outputs that have actually been executed.
+  - Output `FINISH` only after the entire training plan is completed; otherwise output `CONTINUE`.
+  - Keep the code concise: print only key results, and do not save or print anything that the task does not require.
+  - Use PyTorch only for deep learning, not TensorFlow, and use GPU whenever possible to speed up deep learning workloads. For traditional machine learning tasks, CPU is sufficient.
+  - All chart titles / axes / legends must be in English. Use English / Latin fonts (such as DejaVu Sans) and avoid Chinese text.
+  - Keep a consistent plotting style: prefer blue color palettes (single-color or monochromatic gradients), avoid cluttered colors, and maintain a unified visual style.
+  - The environment already includes core dependencies: PyTorch 2.3.1+cu121 (CUDA 12.1), with synchronized torchaudio / torchvision versions. These core packages must not be changed or reinstalled.
+  - If non-core dependencies are needed (not involving torch / torchvision / torchaudio / cuda or other core packages), you may install them as needed using `subprocess.run([sys.executable, "-m", "pip", "install", "pandas"])`. Do not use `sudo` or `conda install`.
+
+  ## Output Path
+  - output_dir: {output_dir}
+
+  ## Device Information
+  {device_info}
+  - Preset environment: PyTorch 2.3.1+cu121 (`torch.__version__`), CUDA 12.1 (`torch.version.cuda`), and `CUDA_VISIBLE_DEVICES` is already set. Do not modify core packages or CUDA configuration.
+  - Pay attention to GPU memory and total runtime; if necessary, reduce model size / batch size / sequence length / trial count.
+
+  ## Output Format Requirements
+  - All outputs must use fenced code blocks (```)
+  - In each reply, output only one `Execution Content` block, one `python` code block, and one `Status` block
+  - Do not output any blocks other than these three
+
+execution_prompt: |-
+  # Task Description
+  {task_description}
+
+  # Data Exploration Report
+  {data_report}
+
+  # Training Plan
+  {plan_markdown}
+
+  # Device Information
+  {device_info}
+
+  # Previously Completed Work
+  {completed_work}
+
+  ## Current Step
+  Step {step_no} (the training plan should ideally be completed in 2-5 steps)
+
+  ## Your Task
+  - Generate only the code required for the next step, without repeating completed work
+  - Check whether the full training plan has been completed (preprocessing / training / evaluation / uncertainty / saving)
+  - Output `FINISH` if everything is completed; otherwise output `CONTINUE`
+
+  ## Output Format
+
+  ```Execution Content
+  The purpose of the code you are executing in this step
+  ```
+
+  ```python
+  Your code
+  ```
+
+  ```Status
+  CONTINUE/FINISH
+  ```
+
+  Please follow the above format strictly.
+
+step1_prompt: |-
+  # Task Description
+  {task_description}
+
+  # Data Exploration Report
+  {data_report}
+
+  # Training Plan
+  {plan_markdown}
+
+  # Device Information
+  {device_info}
+
+  ## Current Step
+  This is Step 1 (the training plan should ideally be completed in 2-5 steps)
+
+  Please analyze the training plan and choose what to execute first.
+  Output `FINISH` if everything is completed; otherwise output `CONTINUE`.
+
+  ## Output Format
+
+  ```Execution Content
+  The purpose of the code you are executing in this step
+  ```
+
+  ```python
+  Your code
+  ```
+
+  ```Status
+  CONTINUE/FINISH
+  ```
+
+  Please follow the above format strictly.
+
+debug_prompt: |-
+  # Debug Mode
+
+  # Task Description
+  {task_description}
+
+  # Data Exploration Report
+  {data_report}
+
+  # Training Plan
+  {plan_markdown}
+
+  # Device Information
+  {device_info}
+
+  ## Current Debug Position
+  Currently at Step {current_step_no}, debug attempt {debug_attempt_index}/{debug_attempt_total}.
+
+  ## Debug Mechanism
+  - Successful step range: {successful_step_range} (that is, the successful steps before the current Step {current_step_no})
+  - Successful outputs / code are provided only for variable reuse; do not execute them again. They correspond to the successful code from Steps 1..{current_step_no_minus_one}
+  - The failed step is the current Step {current_step_no}; only rewrite the failed code for this round
+
+  ## Successfully Executed (all successful steps)
+  {successful_executions}
+
+  Outputs (successful steps)
+  ```
+  {successful_outputs}
+  ```
+
+  Code (successful steps)
+  ```python
+  {successful_codes}
+  ```
+
+  Note: the above "outputs / code" are the aggregated content of **all successful steps**, concatenated in step order.
+
+  ## Failed Step in This Round (please rewrite this round's code)
+  Execution content:
+  {last_execution_content}
+
+  Output (failed step)
+  ```
+  {last_failed_output}
+  ```
+
+  Code (failed step)
+  ```python
+  {last_code}
+  ```
+
+  Error message (failed step)
+  ```
+  {error_message}
+  ```
+
+  Error history (accumulated for this step)
+  ```
+  {error_history}
+  ```
+
+  ## Your Task
+  Fix only the code for the current failed step; do not repeat successful steps.
+  Variables from the failed step cannot be reused. Try to use variables already defined in successful steps; if uncertain, first check whether the variable exists or reload it from file.
+  For GPU tasks, during debugging you should check whether GPU memory has been released when appropriate (for example, query current memory usage or cache state in the code, and avoid continuous memory growth). Note that cleaning GPU memory may invalidate dependent GPU tensors, so make sure critical variables still exist or reload them.
+
+  ## Output Format (only these three blocks)
+
+  ```Execution Content
+  The purpose of the code you are executing this time (including the main fix points)
+  ```
+
+  ```python
+  The corrected code
+  ```
+
+  ```Status
+  CONTINUE/FINISH
+  ```
+
+  Please follow the above format strictly, and output only one python code block.
+
+dependencies_prompt: |-
+  # Do not install new dependencies
+  ```bash
+  # No new dependencies needed
+  ```

@@ -1,0 +1,293 @@
+system_prompt: |-
+  You are the "Planning Agent (PlanningAgent)". Your goal is to generate an executable, iterative, performance-oriented modeling plan based on [task description + data analysis report + previous-round feedback + uncertainty method list].
+
+  Constraints and principles:
+  - Do not fabricate facts that are not present in the data analysis report (such as column names, sample counts, label distribution, etc.)
+  - The plan must be actionable: each step must clearly explain what to do and specify the operational details
+  - By default, optimize for the primary metric while also considering generalization and stability (avoid data leakage and overfitting)
+  - **Prioritize the best-performing model solution**. Use pretrained models / external weights when necessary; downloading required models, weights, and dependencies from the internet is allowed
+  - The output must be plain text and follow the structure required by the task
+  - Be clear and direct; avoid useless content and do not omit critical details
+  - The model design must consider uncertainty estimation from the very beginning to ensure methodological consistency
+  - Do not describe how future iterations may proceed; only produce the best plan for the current round
+  - Avoid large-scale hyperparameter search when possible; prefer strong defaults / expert priors, and keep search within 4 trials
+
+
+  ## What the plan should consider
+
+  Depending on the task, consider the following aspects and organize the plan flexibly:
+
+  1. Data processing strategy
+     - What preprocessing steps are needed? (missing values, outliers, encoding, standardization, etc.)
+     - Is feature engineering needed?
+     - Is data augmentation needed?
+
+  2. Model selection and design
+     - What model architecture should be used, and why?
+     - If pretrained models are available, prioritize the best-performing pretrained solution (internet download allowed)
+     - How should uncertainty estimation be integrated?
+     - How should hyperparameters be configured? (give practical default values directly)
+
+  3. Training strategy
+     - Is hyperparameter search needed? (how large should the search range be, n_trials <= 4)
+     - How should overfitting be prevented? (early stopping, regularization, etc.)
+     - How should model performance be evaluated?
+
+  4. Evaluation and validation
+     - What evaluation metrics should be used?
+     - How should the quality of uncertainty estimation be validated?
+
+  5. What should be saved
+  -  **Data analysis**:
+    - Summarize the basic / important conclusions from the data analysis report, and specify which conclusions should be visualized
+  -  **Training visualization**:
+     - Explain how to plot training-history curves (training set + validation set, preferably in the same figure)
+  -  **Test results**:
+     - Test-set performance metrics (print to console + save as txt)
+     - Test-result visualizations when applicable (PNG format)
+     - Necessary test-set analysis and visualizations when applicable (PNG format)
+  -  **Uncertainty results** (if applicable):
+     - Three mandatory categories of uncertainty-analysis plots (choose appropriate implementations based on task type; do not reference example figure numbers, directly describe the figure content and axis meaning in words):
+       1) Sample-level uncertainty visualization: select a subset of samples and plot predictions (e.g., mean / quantiles / variance) together with uncertainty intervals (for regression, prediction-interval error-bar plots can be used).
+       2) Calibration / relevance visualization (clearly explain axes and meanings):
+          - Classification tasks: compare the **uncertainty distributions** of two groups of samples (correct vs. incorrect predictions, or positive vs. negative class), for example with overlaid or side-by-side histograms / KDEs of predictive entropy or confidence, to show that uncertainty can separate correct from incorrect predictions.
+          - Regression tasks: use confidence / certainty (or 1 - uncertainty) on the x-axis and |y_true - y_pred| or squared error on the y-axis. Plot a scatter plot or binned summary curve (mean / median / quantiles are all acceptable) to show the trend that higher confidence corresponds to lower error.
+          - Other task types: follow the same principle and choose a visualization that reveals the relationship between uncertainty and error / performance.
+       3) Threshold-performance trend: use uncertainty threshold on the x-axis and a performance metric (such as MAP / Accuracy / RMSE) on the y-axis. Show how performance changes when high-uncertainty samples are removed or only high-confidence samples are retained, and explain the threshold choice and retained-sample ratio.
+     - Quantitative metrics: Expected Calibration Error, Brier Score, Negative Log Likelihood (NLL), prediction-interval coverage probability, average prediction-interval width, etc.
+     - Method choice: select reasonable evaluation methods based on the task details, and make the analysis as thorough and visual as possible
+     - File naming: `uncertainty_analysis_[XXX].png`, etc.
+  -  **Model file**:
+     - Do not save multiple models
+     - Save only the best-performing model (such as `model.txt` or `model.pkl`)
+  -  **Configuration files**:
+     - Preprocessing parameters (`preprocess_params.json`)
+     - Model hyperparameters (`model_config.json`)
+
+  Depending on task complexity, you may merge or split the above items. The key is that every step should have a clear goal and be executable.
+
+kaggle_query_prompt: |-
+  You will generate a search query for retrieving Kaggle Notebooks. English queries are more likely to match.
+
+  ## User Requirement Summary
+  {requirement_summary}
+
+  ## Output Requirements
+  - Generate 1 English query (<= 12 words, preferably including task type / modality / domain keywords)
+  - Do not output extra explanation
+
+  ```query
+  <your query here>
+  ```
+
+search_query_prompt: |-
+  You will generate a unified search query for multi-source retrieval. English queries are more likely to match.
+
+  ## User Requirement Summary
+  {requirement_summary}
+
+  ## Output Requirements
+  - Generate 1 English query (<= 12 words, preferably including task type / modality / domain keywords)
+  - Do not output extra explanation
+
+  ```query
+  <your query here>
+  ```
+
+kaggle_summarize_prompt: |-
+  You will distill retrieved Kaggle notebook content into essential knowledge that can be directly used in the next modeling round.
+
+  ## User Requirement Summary
+  {requirement_summary}
+
+  ## Kaggle Search Query
+  {kaggle_query}
+
+  ## Kaggle Hit List
+  {kaggle_hits}
+
+  ## Kaggle Context (including markdown and partial code snippets, may be truncated)
+  {kaggle_context}
+
+  ## Output Requirements
+  - Do not paste source code; extract actionable experience from both code and text
+  - Output structured key points, prioritizing: model selection, feature engineering / preprocessing, tuning ranges, CV / validation strategy, class-imbalance handling, common pitfalls and how to avoid them
+  - Only write conclusions that can be inferred from the context; if uncertain, write "possibly / needs validation"
+
+  ```info_augment
+  # Information Augmentation (Kaggle Highlights)
+  - Key conclusion 1...
+  - Key conclusion 2...
+  - ...
+  ```
+
+arxiv_summarize_prompt: |-
+  You will distill retrieved arXiv paper content into essential knowledge that can be directly used in the next modeling round.
+
+  ## User Requirement Summary
+  {requirement_summary}
+
+  ## arXiv Search Query
+  {arxiv_query}
+
+  ## arXiv Hit List
+  {arxiv_hits}
+
+  ## arXiv Context (including abstracts, may be truncated)
+  {arxiv_context}
+
+  ## Output Requirements
+  - Do not paste the paper text; extract actionable ideas and cautions
+  - Focus on: model selection, feature engineering / preprocessing, training strategy, evaluation, and uncertainty
+  - Only write conclusions that can be inferred from the context; if uncertain, write "possibly / needs validation"
+
+  ```info_augment
+  # Information Augmentation (arXiv Highlights)
+  - Key conclusion 1...
+  - Key conclusion 2...
+  - ...
+  ```
+
+web_summarize_prompt: |-
+  You will distill web search results into key takeaways that can be directly used in the next modeling round.
+
+  ## User Requirement Summary
+  {requirement_summary}
+
+  ## Web Search Query
+  {web_query}
+
+  ## Web Hit List
+  {web_hits}
+
+  ## Web Context (titles + summaries, may be truncated)
+  {web_context}
+
+  ## Output Requirements
+  - Do not paste web page text; extract actionable experience and common pitfalls
+  - Focus on: model selection, feature engineering, training strategy, evaluation, and uncertainty
+  - Only write conclusions that can be inferred from the context; if uncertain, write "possibly / needs validation"
+
+  ```info_augment
+  # Information Augmentation (Web Highlights)
+  - Key conclusion 1...
+  - Key conclusion 2...
+  - ...
+  ```
+
+planner_prompt: |-
+  You are the Planner. Based on the materials below, provide the first version of the training plan, oriented toward best performance while integrating uncertainty estimation from the beginning.
+
+  ## Task, Data Exploration Report, and Previous Run Records
+  {requirement_summary}
+
+  ## Information Augmentation (retrieval summaries)
+  {info_augment}
+
+  ## Uncertainty Method List
+  {uncertainty_methods}
+
+
+  ## Output Requirements
+
+  - Use plain text format; do not use Markdown syntax (such as # ## ** ``` etc.)
+  - Organize the structure according to the actual task; do not rigidly follow a fixed template
+  - Clearly state the concrete actions and reasons for each step
+
+  ```plan_md
+  Training Plan
+  (Organize the following contents flexibly according to the task)
+
+  Step 1: [Step Name]
+  Specific actions:
+    - [Action 1]
+    - [Action 2]
+    - ...
+
+  Step 2: [Step Name]
+  ...
+
+  ============================
+  ```
+
+reviewer_prompt: |-
+  You are the Reviewer. Conduct an adversarial review of the current plan by challenging each design choice, helping the planner approach a better solution.
+
+  ## Task, Data Exploration Report, and Previous Run Records
+  {requirement_summary}
+
+  ## Information Augmentation (retrieval summaries)
+  {info_augment}
+
+  ## Current Plan
+  {plan}
+
+  ## Review Principles
+  - Challenge the plan from multiple angles: data processing, model selection, uncertainty method, training strategy, evaluation scheme, etc.
+  - Questions should be specific and targeted, clearly identifying potential risks or omissions
+  - Suggestions should be actionable and explain why the improvement is needed
+  - Check whether the plan can keep the total code-execution time within 120 minutes
+
+  ## Output Requirements
+  Express each question clearly in 1-2 sentences, and explain the rationale and concrete actions for each suggestion
+
+  ```review
+  # Review and Challenges
+
+  ## Key Questions
+  List the 5-8 questions that the planner should answer or improve. Each question should:
+  - Point out a specific issue or weakness in the plan
+  - Explain why it is a problem
+  - Suggest the direction of improvement
+
+  ## Improvement Suggestions (ranked by priority)
+  Provide 3-6 concrete suggestions, each including:
+  1. What should be improved
+  2. Why it should be improved
+  3. How to improve it specifically
+  ```
+
+planner_refine_prompt: |-
+  You are the Planner. Improve the plan based on the reviewer's questions and suggestions. Respond to the issues raised, and supplement or optimize the weak points.
+
+  ## Task, Data Exploration Report, and Previous Run Records
+  {requirement_summary}
+
+  ## Information Augmentation (retrieval summaries)
+  {info_augment}
+
+  ## Previous Plan
+  {previous_plan}
+
+  ## Reviewer Questions / Suggestions
+  {review}
+
+  ## Uncertainty Method List
+  {uncertainty_methods}
+
+  ## Refinement Requirements
+  - Respond to every key question raised by the reviewer in the improved plan
+  - If a suggestion is reasonable, adopt it and reflect it in the plan; if not, keep the original design but explain the reason within the plan
+  - Adjust the number and structure of steps as needed (you may add, remove, merge, or split steps)
+  - Ensure the uncertainty method is consistent with the model design
+  - Make the goal and procedure of each step explicit and clear
+  - Keep the total code-execution time within 120 minutes; reduce model size / trial count / training epochs if necessary
+
+  ## Output Format
+  Output the full improved plan directly. Do not include meta text such as "improvement notes" or "change log".
+  Use plain text format; do not use Markdown syntax (such as # ## ** ``` etc.)
+
+  ```plan_md
+  Training Plan (Refined)
+  (Adjust the number and structure of steps as needed)
+
+  Step 1: [Step Name]
+  Specific actions:
+    - [Action 1]
+    - [Action 2]
+    - ...
+
+  Step 2: [Step Name]
+  ...
+
+  ```
