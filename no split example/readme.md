@@ -1,5 +1,5 @@
 ## Evidence: Automatic Data Processing Pipeline 
-The following execution log from `medical_sound_classification_v2` dataset demonstrates the complete automated pipeline. The dataset contains **only raw training data (546 samples) without any pre-defined validation/test splits**.
+The following execution log from `medical_sound_classification` dataset demonstrates the complete automated pipeline. The dataset contains **only raw training data (546 samples) without any pre-defined validation/test splits**.
 
 ---
 
