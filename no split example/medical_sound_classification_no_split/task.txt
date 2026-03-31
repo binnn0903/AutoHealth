@@ -1,1 +1,19 @@
+Task Name: medical_sound_classification
 
+[Task Overview]
+- Task Type: multi-modal classification (tabular + audio embeddings)
+- Modality: structured tabular metadata + pre-computed audio embeddings (opera features + BERT embeddings)
+- Downstream Goal: predict the respiratory disease class for each candidate based on metadata and audio embeddings.
+- Target Column: disease (categorical label, 0/1/2)
+- Evaluation Metric: Macro F1
+- Note: This version only contains training data. No val/test split provided.
+- Objective: train a high-performing model that generalizes well to unseen candidates for robust respiratory disease detection.
+
+[Dataset Paths]
+- Dataset Root: medical_sound_classification/
+- Train Table: train/train.csv
+- Train Features: train/sounds/
+
+[Dataset Details]
+- Format: CSV (tables) + NPY (opera audio features) + JSON (precomputed BERT embeddings)
+- Train samples: 546 candidates
