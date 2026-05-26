@@ -1,0 +1,98 @@
+{
+  "Clinical Readability": {
+    "Clinical Readability": {
+      "score": 4,
+      "justification": "The report is generally clear, logically structured, and understandable to clinicians without advanced machine learning expertise. Technical terminology is moderate and explanations of calibration and uncertainty are relatively accessible."
+    },
+    "Explanation Completeness": {
+      "score": 4,
+      "justification": "The report explains the dataset structure, preprocessing, model formulation, calibration strategy, uncertainty estimation, and evaluation metrics. However, details regarding the underlying EEG signal representation and clinical annotation process remain limited."
+    },
+    "Actionability": {
+      "score": 3,
+      "justification": "The report discusses uncertainty-based filtering and cautious interpretation of high-entropy samples, but it stops short of defining explicit clinical workflows, referral thresholds, escalation pathways, or operational decision boundaries."
+    },
+    "Cognitive Burden": {
+      "score": 4,
+      "justification": "The report is concise and relatively easy to follow. Figures and sections are well organized. Some repeated discussion around probability quality and ambiguity adjustment could be streamlined further."
+    }
+  },
+  "Clinical Reliability": {
+    "Calibration Awareness": {
+      "score": 4,
+      "justification": "Calibration is treated as a central objective rather than an afterthought. The report includes ECE, KL/NLL, reliability curves, and interpretation of confidence mismatch. However, the reported ECE of 0.4886 is extremely high and the report underemphasizes the practical severity of this calibration weakness."
+    },
+    "Uncertainty Quality": {
+      "score": 4,
+      "justification": "The report meaningfully integrates predictive entropy, uncertainty-error analysis, entropy distributions, and selective prediction. The uncertainty signal is operationally interpretable and tied directly to model probabilities."
+    },
+    "Clinical Safety Awareness": {
+      "score": 3,
+      "justification": "The report appropriately recommends caution for high-entropy cases and avoids overly aggressive autonomous-use claims. However, there is insufficient discussion of risks associated with seizure misclassification, missed harmful activity, or failure modes in real-world EEG workflows."
+    },
+    "Fairness and Bias Awareness": {
+      "score": 1,
+      "justification": "The report contains essentially no discussion of demographic bias, subgroup calibration, device/site variation, demographic fairness, or shortcut learning risks. This is a major omission for a clinical AI report."
+    }
+  },
+  "Deployment Readiness": {
+    "Deployment Readiness": {
+      "score": 3,
+      "justification": "The report demonstrates some deployment-oriented thinking through calibration and uncertainty filtering, but operational deployment considerations remain incomplete. There is no discussion of clinical integration, latency, alarm burden, prospective validation, or workflow compatibility."
+    },
+    "Human-in-the-Loop Design": {
+      "score": 3,
+      "justification": "The uncertainty filtering framework implicitly supports clinician oversight for ambiguous cases, but the report does not formalize escalation logic, manual review criteria, or selective automation protocols."
+    },
+    "External Validity Awareness": {
+      "score": 2,
+      "justification": "The report discusses split separation and leakage prevention but provides no external validation, cross-hospital analysis, demographic shift evaluation, or robustness analysis across EEG acquisition settings."
+    }
+  },
+  "Scientific Rigor": {
+    "Methodological Transparency": {
+      "score": 5,
+      "justification": "The report clearly describes preprocessing, smoothing, ambiguity adjustment, calibration blending, optimization objective, and split strategy. Leakage considerations and validation/test separation are explicitly discussed."
+    },
+    "Evidence-grounded Reasoning": {
+      "score": 5,
+      "justification": "Claims are generally proportional to the presented evidence. The report avoids exaggerated deployment claims and consistently ties conclusions to quantitative metrics and uncertainty analyses."
+    },
+    "Limitation Quality": {
+      "score": 4,
+      "justification": "The report acknowledges ambiguity, calibration limitations, class imbalance, and split shift. However, it insufficiently critiques the implications of the very high ECE and does not deeply discuss annotation noise, dataset representativeness, or external generalization limitations."
+    }
+  },
+  "Overall Assessment": {
+    "Overall Clinical Usefulness": {
+      "score": 4,
+      "justification": "The report would be useful to clinicians and clinical AI researchers interested in uncertainty-aware EEG classification. Its emphasis on probability quality and uncertainty behavior substantially improves interpretability."
+    },
+    "Overall Trustworthiness": {
+      "score": 4,
+      "justification": "The report is relatively trustworthy because it explicitly analyzes uncertainty and calibration, avoids inflated claims, and presents transparent methodology. The absence of fairness and external validation analysis prevents a higher score."
+    },
+    "Publication-level Quality": {
+      "score": 4,
+      "justification": "This report style is consistent with supplementary or technical reporting quality seen in serious clinical AI research. The strong uncertainty and calibration analysis are notable strengths, though fairness, external validation, and clinical workflow analysis would be required for top-tier translational publication standards."
+    }
+  },
+  "summary": {
+    "major_strengths": [
+      "Strong emphasis on probability quality rather than only accuracy metrics",
+      "Well-integrated uncertainty quantification and selective prediction analysis",
+      "Transparent methodological description with explicit calibration discussion",
+      "Clear and concise structure suitable for clinician-facing technical interpretation",
+      "Avoids exaggerated autonomous deployment claims"
+    ],
+    "major_weaknesses": [
+      "No meaningful fairness or subgroup bias analysis",
+      "Lack of external validation or domain-shift evaluation",
+      "Very high ECE is reported but insufficiently problematized",
+      "Limited operational workflow discussion for real EEG monitoring environments",
+      "Insufficient discussion of patient safety consequences for false negatives and false positives"
+    ],
+    "deployment_readiness": "Moderate",
+    "overall_recommendation": "This is a scientifically solid and unusually uncertainty-aware AutoML report with strong methodological transparency and clinically interpretable reliability analysis. It is substantially stronger than typical automated ML reports because it explicitly prioritizes calibration and uncertainty behavior. However, deployment-oriented clinical AI standards would still require stronger fairness analysis, external validation, workflow integration planning, and deeper discussion of safety-critical failure modes before real-world adoption."
+  }
+}
