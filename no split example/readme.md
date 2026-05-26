@@ -88,9 +88,5 @@ This capability significantly reduces the manual effort required for machine lea
 
 ---
 
-Complete execution log available at:
-```
-/home/liweibin/AutoClineAI/outputs/deepseek_v3_parallel/20260331_065942/runs/medical_sound_classification_v2/worker0_20260331_065942/round_01/code_execution/run_stdout.log
-```
-
+Complete execution log is included in `run_stdout_1.log`.
 

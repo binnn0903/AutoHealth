@@ -140,7 +140,7 @@ Sample 0 shapes:
   emb_vowel: torch.Size([1, 512])
   Label: 2
 
-Preprocessed data saved to: /home//AutoClineAI/outputs/deepseek_v3_parallel/20260331_065942/runs/medical_sound_classification_v2/worker0_20260331_065942/round_01/code_execution/preprocessed_data.pkl
+Preprocessed data saved to: <output_dir>/preprocessed_data.pkl
 Step 1 completed successfully!
 
 
@@ -162,7 +162,7 @@ Model parameters:
   Total parameters: 1,571,203
   Trainable parameters: 1,571,203
 
-Model configuration saved to: /home/AutoClineAI/outputs/deepseek_v3_parallel/20260331_065942/runs/medical_sound_classification_v2/worker0_20260331_065942/round_01/code_execution/model_config.json
+Model configuration saved to: <output_dir>/model_config.json
 
 
 --------------------------------------------------------------------------------
@@ -189,7 +189,7 @@ Epoch 035: Train Loss = 0.4651, Val Loss = 0.5358, Val F1 = 0.7843
 Epoch 036: Train Loss = 0.4493, Val Loss = 0.5190, Val F1 = 0.7914
 Epoch 037: Train Loss = 0.4715, Val Loss = 0.4909, Val F1 = 0.7873
 Early stopping triggered at epoch 37
-Ensemble member 3 saved to /home/AutoClineAI/outputs/deepseek_v3_parallel/20260331_065942/runs/medical_sound_classification_v2/worker0_20260331_065942/round_01/code_execution/models/model_fold0_member2.pth
+Ensemble member 3 saved to <output_dir>/models/model_fold0_member2.pth
 Best validation Macro F1: 0.8225
 
 --- Temperature Scaling Calibration ---
@@ -211,7 +211,7 @@ Class-wise metrics:
   Class 1: Precision=0.820, Recall=0.854, F1=0.837
   Class 2: Precision=0.794, Recall=0.794, F1=0.794
 
-Fold 0 results saved to /home/AutoClineAI/outputs/deepseek_v3_parallel/20260331_065942/runs/medical_sound_classification_v2/worker0_20260331_065942/round_01/code_execution/fold_0_results.pkl
+Fold 0 results saved to <output_dir>/fold_0_results.pkl
 
 Fold 0 training completed in 13.78 seconds
 
@@ -245,7 +245,7 @@ Class-wise metrics:
   Class 1: Precision=0.844, Recall=0.809, F1=0.826
   Class 2: Precision=0.758, Recall=0.735, F1=0.746
 
-Fold 4 results saved to /home/AutoClineAI/outputs/deepseek_v3_parallel/20260331_065942/runs/medical_sound_classification_v2/worker0_20260331_065942/round_01/code_execution/fold_4_results.pkl
+Fold 4 results saved to <output_dir>/fold_4_results.pkl
 
 Fold 4 training completed in 10.38 seconds
 
@@ -270,8 +270,8 @@ Fold   Accuracy   Macro F1   Weighted F1  ECE      Brier
 4      0.8073     0.8066      0.8067        0.0857    0.0850
 
 Overall results saved to:
-  - /home/AutoClineAI/outputs/deepseek_v3_parallel/20260331_065942/runs/medical_sound_classification_v2/worker0_20260331_065942/round_01/code_execution/cv_overall_results.pkl
-  - /home/AutoClineAI/outputs/deepseek_v3_parallel/20260331_065942/runs/medical_sound_classification_v2/worker0_20260331_065942/round_01/code_execution/cv_performance.txt
+  - <output_dir>/cv_overall_results.pkl
+  - <output_dir>/cv_performance.txt
 
 5-fold cross-validation training completed!
 
@@ -313,7 +313,7 @@ FINAL PERFORMANCE SUMMARY
   ECE:         0.1162 ± 0.0393
   Brier Score: 0.0995 ± 0.0136
 
-All visualizations saved to: /home/AutoClineAI/outputs/deepseek_v3_parallel/20260331_065942/runs/medical_sound_classification_v2/worker0_20260331_065942/round_01/code_execution/figures
+All visualizations saved to: <output_dir>/figures
 Total models saved: 5 folds × 3 ensemble members = 15 models
 ============================================================
 
@@ -420,7 +420,7 @@ Fold 0不确定性分析:
 分析完成！
 
   分析目的: 基于已完成的5折交叉验证训练结果和可视化分析，识别模型性能瓶颈和不确定性校准问题，提出具体的改进方案，为下一轮训练提供可执行的优化建议。 | 状态: continue | ✗ 执行失败: Traceback (most recent call last):
-  File "/home/AutoClineAI/agents/code_execution_agent.py", line 772, in _exec_code
+  File "<repo>/agents/code_execution_agent.py", line 772, in _exec_code
     exec(compiled, self.session)
   File "<string>", line 110, in <module>
   分析目的: 基于已完成的5折交叉验证训练结果和可视化分析，识别模型性能瓶颈和不确定性校准问题，提出具体的改进方案，为下一轮训练提供可执行的优化建议。

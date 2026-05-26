@@ -490,7 +490,7 @@ def quick_profile_timeseries_long_csv(
     return base
 
 
-def list_datasets(root: str = "/data4/liweibin/Agent-HealthScience/Dataset") -> Dict[str, Any]:
+def list_datasets(root: str = "./Dataset") -> Dict[str, Any]:
     root_path = Path(root).resolve()
     datasets: List[Dict[str, Any]] = []
     if not root_path.exists() or not root_path.is_dir():
@@ -918,7 +918,7 @@ def quick_profile_dataset(dataset_dir: str) -> Dict[str, Any]:
     return out
 
 
-def quick_profile_all_datasets(root: str = "/data4/liweibin/Agent-HealthScience/Dataset") -> Dict[str, Any]:
+def quick_profile_all_datasets(root: str = "./Dataset") -> Dict[str, Any]:
     listing = list_datasets(root)
     results: List[Dict[str, Any]] = []
     for ds in listing.get("datasets", []):
