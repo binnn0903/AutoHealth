@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Report Human Evaluation</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <p class="eyebrow">Human Evaluation</p>
+        <h1>LLM 评测问卷</h1>
+        <p class="muted">严格对齐 `Report Judgment Score/ChatGPT.txt` rubric，并和现有 LLM 评分直接对比。</p>
+      </div>
+
+      <section class="panel compact">
+        <label for="task-select">选择报告</label>
+        <select id="task-select"></select>
+        <p id="task-path" class="microcopy"></p>
+        <div class="button-row">
+          <button id="open-report-btn" type="button">打开 PDF</button>
+          <button id="load-llm-btn" type="button" class="ghost">载入 LLM 评分</button>
+        </div>
+      </section>
+
+      <section class="panel compact">
+        <h2>评分状态</h2>
+        <div id="progress-summary" class="stats-grid"></div>
+      </section>
+
+      <section class="panel compact">
+        <h2>总览对比</h2>
+        <div id="big-metric-summary" class="summary-list"></div>
+      </section>
+
+      <section class="panel compact">
+        <h2>本地数据</h2>
+        <div class="button-column">
+          <button id="save-local-btn" type="button">保存到浏览器</button>
+          <button id="export-json-btn" type="button">导出人类评分 JSON</button>
+          <button id="export-comparison-btn" type="button" class="ghost">导出对比 JSON</button>
+          <label class="file-button">
+            导入人类评分 JSON
+            <input id="import-json-input" type="file" accept=".json">
+          </label>
+          <button id="clear-local-btn" type="button" class="danger">清空当前任务本地评分</button>
+        </div>
+      </section>
+
+      <section class="panel compact">
+        <h2>跨任务仪表板</h2>
+        <div id="dashboard" class="dashboard"></div>
+      </section>
+    </aside>
+
+    <main class="main-content">
+      <section class="hero panel">
+        <div>
+          <p class="eyebrow">Rubric-Aligned Form</p>
+          <h2 id="report-title">报告问卷</h2>
+          <p class="muted">每个维度均为 1-5 分，并填写简短 justification。导出 JSON 后可直接复用现有聚合逻辑。</p>
+        </div>
+        <div class="hero-actions">
+          <span id="autosave-indicator" class="pill">未保存</span>
+          <span id="llm-indicator" class="pill subtle">LLM 评分未载入</span>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <div class="panel viewer-panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Report Preview</p>
+              <h2>原始报告</h2>
+            </div>
+            <a id="report-link" href="../report/T1.pdf" target="_blank" rel="noreferrer">在新标签页打开</a>
+          </div>
+          <iframe id="report-frame" title="PDF report preview"></iframe>
+        </div>
+
+        <div class="panel comparison-panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Side-by-Side</p>
+              <h2>LLM vs 人类专家</h2>
+            </div>
+          </div>
+          <div id="comparison-table-wrapper"></div>
+        </div>
+      </section>
+
+      <form id="evaluation-form" class="form-stack">
+        <section id="rubric-sections"></section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Summary</p>
+              <h2>整体总结</h2>
+            </div>
+          </div>
+
+          <div class="summary-grid">
+            <label>
+              <span>Major strengths（每行一条）</span>
+              <textarea id="major-strengths" rows="5" placeholder="例如：Excellent calibration analysis..."></textarea>
+            </label>
+            <label>
+              <span>Major weaknesses（每行一条）</span>
+              <textarea id="major-weaknesses" rows="5" placeholder="例如：Limited fairness analysis..."></textarea>
+            </label>
+          </div>
+
+          <div class="summary-grid">
+            <label>
+              <span>Deployment readiness</span>
+              <select id="deployment-readiness">
+                <option value="">请选择</option>
+                <option value="Low">Low</option>
+                <option value="Moderate">Moderate</option>
+                <option value="High">High</option>
+              </select>
+            </label>
+            <label>
+              <span>Overall recommendation</span>
+              <textarea id="overall-recommendation" rows="5" placeholder="写一段总体建议。"></textarea>
+            </label>
+          </div>
+        </section>
+      </form>
+    </main>
+  </div>
+
+  <template id="metric-card-template">
+    <article class="metric-card">
+      <div class="metric-copy">
+        <p class="metric-code"></p>
+        <h3></h3>
+        <p class="metric-desc"></p>
+      </div>
+      <div class="score-row" role="radiogroup"></div>
+      <label class="justification">
+        <span>Justification</span>
+        <textarea rows="4"></textarea>
+      </label>
+      <div class="llm-hint hidden"></div>
+    </article>
+  </template>
+
+  <script src="./app.js"></script>
+</body>
+</html>

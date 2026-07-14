@@ -1,0 +1,7 @@
+{
+  "expert_role": "senior emergency physician",
+  "description": "Independent healthcare professional evaluation conducted during the rebuttal stage using the same rubric as the LLM judge.",
+  "source_report_dir": "../report",
+  "source_llm_score_dir": "../Report Judgment Score/scores",
+  "method": "Human expert assessment of the generated reports using 17 rubric items across clinical readability, clinical reliability, deployment readiness, scientific rigor, and overall assessment."
+}

@@ -1,0 +1,86 @@
+{
+  "Clinical Readability": {
+    "Clinical Readability": {
+      "score": 4,
+      "justification": ""
+    },
+    "Explanation Completeness": {
+      "score": 4,
+      "justification": ""
+    },
+    "Actionability": {
+      "score": 5,
+      "justification": ""
+    },
+    "Cognitive Burden": {
+      "score": 4,
+      "justification": ""
+    }
+  },
+  "Clinical Reliability": {
+    "Calibration Awareness": {
+      "score": 5,
+      "justification": ""
+    },
+    "Uncertainty Quality": {
+      "score": 4,
+      "justification": ""
+    },
+    "Clinical Safety Awareness": {
+      "score": 4,
+      "justification": ""
+    },
+    "Fairness and Bias Awareness": {
+      "score": 3,
+      "justification": ""
+    }
+  },
+  "Deployment Readiness": {
+    "Deployment Readiness": {
+      "score": 3,
+      "justification": ""
+    },
+    "Human-in-the-Loop Design": {
+      "score": 4,
+      "justification": ""
+    },
+    "External Validity Awareness": {
+      "score": 2,
+      "justification": ""
+    }
+  },
+  "Scientific Rigor": {
+    "Methodological Transparency": {
+      "score": 5,
+      "justification": ""
+    },
+    "Evidence-grounded Reasoning": {
+      "score": 5,
+      "justification": ""
+    },
+    "Limitation Quality": {
+      "score": 4,
+      "justification": ""
+    }
+  },
+  "Overall Assessment": {
+    "Overall Clinical Usefulness": {
+      "score": 5,
+      "justification": ""
+    },
+    "Overall Trustworthiness": {
+      "score": 4,
+      "justification": ""
+    },
+    "Publication-level Quality": {
+      "score": 4,
+      "justification": ""
+    }
+  },
+  "summary": {
+    "major_strengths": [],
+    "major_weaknesses": [],
+    "deployment_readiness": "",
+    "overall_recommendation": ""
+  }
+}
